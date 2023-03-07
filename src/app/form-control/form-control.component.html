@@ -1,0 +1,30 @@
+<p>form-control inside formArray</p>
+
+<form [formGroup]="group" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Name</label>
+    <input type="text" formControlName="nameControl" />
+  </div>
+  <div formArrayName="arrayControl">
+    <label>Array</label>
+    <div
+      *ngFor="
+        let control of array.controls;
+        let i = index;
+        let f = first;
+        let l = last;
+        let c = count
+      "
+    >
+      <input type="text" [formControlName]="i" />
+      <button *ngIf="!f || c !== 1" type="button" (click)="removeControl(i)">
+        Remove
+      </button>
+      <button *ngIf="l" type="button" (click)="addControl()">Add</button>
+    </div>
+  </div>
+
+  <button type="submit" (click)="onSubmit()">Submit</button>
+</form>
+
+{{ group.value | json }}

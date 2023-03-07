@@ -1,0 +1,38 @@
+<p>FormGroup inside FormArray</p>
+<form [formGroup]="containerGroup" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Name</label>
+    <input type="text" formControlName="nameControl" />
+  </div>
+
+  <div formArrayName="arrayControl">
+    <label>Array</label>
+    <div
+      *ngFor="
+        let control of array.controls;
+        let i = index;
+        let first = first;
+        let last = last;
+        let count = count
+      "
+    >
+      <div [formGroupName]="i">
+        {{ i }}
+        <input type="text" formControlName="status" />
+      </div>
+
+      <button
+        *ngIf="!first || count !== 1"
+        type="button"
+        (click)="removeControl(i)"
+      >
+        Remove
+      </button>
+      <button *ngIf="last" type="button" (click)="addControl()">Add</button>
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+{{ this.containerGroup.value | json }}
